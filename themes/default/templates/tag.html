@@ -1,0 +1,58 @@
+<div class="tag-page">
+    <header class="tag-header">
+        <h1>标签: #{{.Tag.Name}}</h1>
+        <p class="tag-description">共 {{.Tag.Count}} 篇文章</p>
+        <a href="/tags/" class="back-link">← 返回标签列表</a>
+    </header>
+
+    <div class="post-list">
+        {{range .Posts}}
+        <article class="post-card">
+            <header class="post-card-header">
+                <h2 class="post-card-title">
+                    <a href="{{.URL}}">{{.Title}}</a>
+                </h2>
+                <div class="post-card-meta">
+                    <span class="post-card-date">{{dateFormat .Date}}</span>
+                    {{if .Categories}}
+                    <span class="post-card-categories">
+                        {{range .Categories}}
+                        <a href="/categories/{{urlize .}}/">{{.}}</a>
+                        {{end}}
+                    </span>
+                    {{end}}
+                </div>
+            </header>
+            {{if .Summary}}
+            <div class="post-card-excerpt">
+                <p>{{.Summary}}</p>
+            </div>
+            {{end}}
+            <footer class="post-card-footer">
+                {{if .Tags}}
+                <div class="post-card-tags">
+                    {{range first .Tags 3}}
+                    <a href="/tags/{{urlize .}}/" class="tag-chip">#{{.}}</a>
+                    {{end}}
+                </div>
+                {{end}}
+                <a href="{{.URL}}" class="read-more">阅读全文 →</a>
+            </footer>
+        </article>
+        {{end}}
+    </div>
+
+    {{if .Pagination}}
+    {{if gt .Pagination.TotalPages 1}}
+    <nav class="pagination">
+        {{if .Pagination.HasPrev}}
+        <a href="{{.Pagination.PrevURL}}" class="pagination-prev">← 上一页</a>
+        {{end}}
+        <span class="pagination-info">第 {{.Pagination.Page}} / {{.Pagination.TotalPages}} 页</span>
+        {{if .Pagination.HasNext}}
+        <a href="{{.Pagination.NextURL}}" class="pagination-next">下一页 →</a>
+        {{end}}
+    </nav>
+    {{end}}
+    {{end}}
+</div>

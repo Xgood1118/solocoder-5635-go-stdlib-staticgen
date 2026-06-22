@@ -1,0 +1,30 @@
+<div class="archive-page">
+    <header class="archive-header">
+        <h1>文章归档</h1>
+        <p class="archive-description">共 {{len .Posts}} 篇文章</p>
+    </header>
+
+    {{if .Data}}
+    {{$groups := index .Data "YearGroups"}}
+    {{range $groups}}
+    <section class="archive-year">
+        <h2 class="archive-year-title">{{.Year}}</h2>
+        <ul class="archive-list">
+            {{range .Posts}}
+            <li class="archive-item">
+                <span class="archive-date">{{dateFormat .Date}}</span>
+                <a href="{{.URL}}" class="archive-title">{{.Title}}</a>
+                {{if .Categories}}
+                <span class="archive-categories">
+                    {{range .Categories}}
+                    <a href="/categories/{{urlize .}}/" class="category-tag small">{{.}}</a>
+                    {{end}}
+                </span>
+                {{end}}
+            </li>
+            {{end}}
+        </ul>
+    </section>
+    {{end}}
+    {{end}}
+</div>

@@ -1,0 +1,16 @@
+<article class="page single-page">
+    <header class="page-header">
+        <h1 class="page-title">{{.Page.Title}}</h1>
+        {{if .Data}}
+        {{if index .Data "date"}}
+        <div class="page-meta">
+            <span class="page-date">{{index .Data "date"}}</span>
+        </div>
+        {{end}}
+        {{end}}
+    </header>
+
+    <div class="page-content">
+        {{safeHTML .Page.HTML}}
+    </div>
+</article>

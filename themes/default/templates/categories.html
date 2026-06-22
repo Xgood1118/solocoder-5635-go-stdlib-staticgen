@@ -1,0 +1,30 @@
+<div class="categories-page">
+    <header class="categories-header">
+        <h1>文章分类</h1>
+        <p class="categories-description">共 {{len .Site.AllCategories}} 个分类</p>
+    </header>
+
+    <div class="categories-grid">
+        {{range .Site.AllCategories}}
+        <article class="category-card">
+            <h2 class="category-card-title">
+                <a href="{{.URL}}">{{.Name}}</a>
+            </h2>
+            <p class="category-card-count">{{.Count}} 篇文章</p>
+            <ul class="category-card-posts">
+                {{range first .Posts 5}}
+                <li>
+                    <a href="{{.URL}}">{{.Title}}</a>
+                    <span class="category-card-date">{{dateFormat .Date}}</span>
+                </li>
+                {{end}}
+                {{if gt .Count 5}}
+                <li class="category-card-more">
+                    <a href="{{.URL}}">查看全部 {{.Count}} 篇 →</a>
+                </li>
+                {{end}}
+            </ul>
+        </article>
+        {{end}}
+    </div>
+</div>

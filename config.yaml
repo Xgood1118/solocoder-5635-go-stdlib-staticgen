@@ -1,0 +1,40 @@
+site:
+  title: "技术博客"
+  description: "一个使用 Go 构建的技术博客"
+  author: "Admin"
+  language: "zh-CN"
+  baseURL: "/"
+  url: "http://localhost:8080"
+  copyright: "© 2024 技术博客 All Rights Reserved"
+  keywords:
+    - "技术"
+    - "博客"
+    - "Go"
+    - "编程"
+
+build:
+  prettyURLs: true
+  minifyHTML: true
+  minifyCSS: true
+  minifyJS: true
+  incremental: true
+  hashStaticAssets: true
+  drafts: false
+  workers: 4
+
+dev:
+  port: 8080
+  host: "localhost"
+  hotReload: true
+  openBrowser: false
+
+deploy:
+  type: "dir"
+  target: "./dist"
+
+theme:
+  name: "default"
+  dir: "themes"
+
+pagination:
+  pageSize: 10

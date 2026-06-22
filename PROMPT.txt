@@ -1,0 +1,7 @@
+公司技术博客用 WordPress 太笨重了，纯静态站就够了。写一个静态站点生成器，Go 标准库，把 Markdown 转成 HTML。
+
+content/ 目录放所有 Markdown 文件，每篇带 front matter（title、date、tags、categories、draft、summary、cover），文件名 YYYY-MM-DD-slug.md，文件夹结构直接反映 URL。模板用 Go html/template，分 base/page/list/single，用户可以自定义，主题=一组模板+静态资源可下载上传。static/ 目录的 CSS/JS/图片自动复制到输出，支持 hash 命名。
+
+生成过程解析所有 MD + front matter，应用模板渲染，内部链接 [link](other.md) 自动转 other.html，图片复制加路径修正，代码块语法高亮用 chroma 尽量轻。输出 public/ 目录，整洁 URL 无 .html 后缀可选，压缩 HTML/CSS/JS，自动生成 sitemap.xml、RSS 2.0 feed、robots.txt。附加页面首页最新 N 篇+分类导航、归档页倒序、分类页、标签云、标签详情、关于页（about.md 特殊处理）、404 页。
+
+开发模式监视文件变化 + WebSocket 浏览器热重载 + 详细日志。构建模式一次性全量生成或增量只重新生成变更的，并行多核。部署一键复制到目录/推 Git/rsync 到服务器/S3 mock。CLI 三个命令：build、dev、new post。

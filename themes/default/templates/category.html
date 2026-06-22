@@ -1,0 +1,44 @@
+<div class="category-page">
+    <header class="category-header">
+        <h1>分类: {{.Category.Name}}</h1>
+        <p class="category-description">共 {{.Category.Count}} 篇文章</p>
+        <a href="/categories/" class="back-link">← 返回分类列表</a>
+    </header>
+
+    <div class="post-list">
+        {{range .Posts}}
+        <article class="post-card">
+            <header class="post-card-header">
+                <h2 class="post-card-title">
+                    <a href="{{.URL}}">{{.Title}}</a>
+                </h2>
+                <div class="post-card-meta">
+                    <span class="post-card-date">{{dateFormat .Date}}</span>
+                </div>
+            </header>
+            {{if .Summary}}
+            <div class="post-card-excerpt">
+                <p>{{.Summary}}</p>
+            </div>
+            {{end}}
+            <footer class="post-card-footer">
+                <a href="{{.URL}}" class="read-more">阅读全文 →</a>
+            </footer>
+        </article>
+        {{end}}
+    </div>
+
+    {{if .Pagination}}
+    {{if gt .Pagination.TotalPages 1}}
+    <nav class="pagination">
+        {{if .Pagination.HasPrev}}
+        <a href="{{.Pagination.PrevURL}}" class="pagination-prev">← 上一页</a>
+        {{end}}
+        <span class="pagination-info">第 {{.Pagination.Page}} / {{.Pagination.TotalPages}} 页</span>
+        {{if .Pagination.HasNext}}
+        <a href="{{.Pagination.NextURL}}" class="pagination-next">下一页 →</a>
+        {{end}}
+    </nav>
+    {{end}}
+    {{end}}
+</div>

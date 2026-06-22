@@ -1,0 +1,13 @@
+# build artifacts
+staticgen.exe
+staticgen
+*.exe
+
+# build cache
+.build-cache.json
+
+# Trae AI tool metadata
+.trae/
+
+# public output (generated)
+public/

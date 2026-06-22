@@ -1,0 +1,46 @@
+<div class="tags-page">
+    <header class="tags-header">
+        <h1>标签云</h1>
+        <p class="tags-description">共 {{len .Site.AllTags}} 个标签</p>
+    </header>
+
+    <div class="tag-cloud">
+        {{range .Site.AllTags}}
+        {{$size := "tag-small"}}
+        {{if gt .Count 10}}
+        {{$size = "tag-large"}}
+        {{else if gt .Count 5}}
+        {{$size = "tag-medium"}}
+        {{end}}
+        <a href="{{.URL}}" class="tag-cloud-item {{$size}}">
+            #{{.Name}} <span class="tag-count">({{.Count}})</span>
+        </a>
+        {{end}}
+    </div>
+
+    <div class="tags-list-section">
+        <h2>所有标签</h2>
+        <div class="tags-grid">
+            {{range .Site.AllTags}}
+            <article class="tag-card">
+                <h3 class="tag-card-title">
+                    <a href="{{.URL}}">#{{.Name}}</a>
+                </h3>
+                <p class="tag-card-count">{{.Count}} 篇文章</p>
+                <ul class="tag-card-posts">
+                    {{range first .Posts 3}}
+                    <li>
+                        <a href="{{.URL}}">{{.Title}}</a>
+                    </li>
+                    {{end}}
+                    {{if gt .Count 3}}
+                    <li class="tag-card-more">
+                        <a href="{{.URL}}">查看全部 →</a>
+                    </li>
+                    {{end}}
+                </ul>
+            </article>
+            {{end}}
+        </div>
+    </div>
+</div>
