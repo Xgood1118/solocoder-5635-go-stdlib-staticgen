@@ -10,4 +10,6 @@ staticgen
 .trae/
 
 # public output (generated)
-public/
+public/public/
+dir/
+*.exe

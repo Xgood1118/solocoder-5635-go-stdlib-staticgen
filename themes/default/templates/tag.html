@@ -31,7 +31,7 @@
             <footer class="post-card-footer">
                 {{if .Tags}}
                 <div class="post-card-tags">
-                    {{range first .Tags 3}}
+                    {{range firstStrings .Tags 3}}
                     <a href="/tags/{{urlize .}}/" class="tag-chip">#{{.}}</a>
                     {{end}}
                 </div>

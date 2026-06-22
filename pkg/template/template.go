@@ -148,6 +148,12 @@ func (e *Engine) buildFuncMap() template.FuncMap {
 			}
 			return posts[:n]
 		},
+		"firstStrings": func(items []string, n int) []string {
+			if len(items) <= n {
+				return items
+			}
+			return items[:n]
+		},
 		"last": func(posts []*models.Post, n int) []*models.Post {
 			if len(posts) <= n {
 				return posts
@@ -165,6 +171,13 @@ func (e *Engine) buildFuncMap() template.FuncMap {
 				return []*models.Post{}
 			}
 			return items[start:end]
+		},
+		"makeRange": func(n int) []int {
+			result := make([]int, n)
+			for i := range result {
+				result[i] = i + 1
+			}
+			return result
 		},
 		"now": func() time.Time {
 			return time.Now()
@@ -257,12 +270,40 @@ func (e *Engine) RenderWithBase(baseName, contentName string, data *models.Templ
 		return "", err
 	}
 
+	var pageTitle string
+	if data.IsPost && data.Post != nil {
+		pageTitle = data.Post.Title
+	} else if data.IsPage {
+		if p, ok := data.Page.(*models.Page); ok && p != nil {
+			pageTitle = p.Title
+		}
+	} else if data.IsCategory && data.Category != nil {
+		pageTitle = "分类: " + data.Category.Name
+	} else if data.IsTag && data.Tag != nil {
+		pageTitle = "标签: #" + data.Tag.Name
+	} else if data.IsArchive {
+		pageTitle = "文章归档"
+	} else if data.Is404 {
+		pageTitle = "页面未找到"
+	} else if data.IsHome {
+		pageTitle = ""
+	}
+
 	baseData := map[string]interface{}{
 		"Site":         data.Site,
 		"Content":      template.HTML(content),
 		"CurrentURL":   data.CurrentURL,
 		"StaticAssets": data.StaticAssets,
-		"Page":         data,
+		"Post":         data.Post,
+		"PageData":     data.Page,
+		"PageTitle":    pageTitle,
+		"IsHome":       data.IsHome,
+		"IsArchive":    data.IsArchive,
+		"IsCategory":   data.IsCategory,
+		"IsTag":        data.IsTag,
+		"IsPage":       data.IsPage,
+		"IsPost":       data.IsPost,
+		"Is404":        data.Is404,
 	}
 
 	return e.Render(baseName, baseData)
